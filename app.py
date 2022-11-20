@@ -11,5 +11,10 @@ migrate = Migrate(app, db)
 
 jwt = JWTManager(app)
 
-from app.model import user
-from app import routes
+import model.user
+import routes
+
+if __name__ == '__main__':
+    app.run(
+        debug = False,
+        port = 5000)

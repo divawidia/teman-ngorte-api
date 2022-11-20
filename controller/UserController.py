@@ -1,16 +1,16 @@
-from app.model.user import User
-
-from app import response, app, db
+import response
+from app import db
 from flask import request
 from flask_jwt_extended import *
 from datetime import datetime,timedelta
+import model.user
 
 def register():
     try:
         username = request.form.get('username')
         password = request.form.get('password')
 
-        users = User(username=username)
+        users = model.user.User(username=username)
         users.setPassword(password)
         db.session.add(users)
         db.session.commit()
@@ -35,7 +35,7 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        user = User.query.filter_by(username=username).first()
+        user = model.user.User.query.filter_by(username=username).first()
 
         if not user:
             return response.badRequest([], 'Username tidak terdaftar')
